@@ -56,7 +56,8 @@ def contar_status(linhas, status_alvo):
     """
     alvo = status_alvo.strip().lower()
     return sum(
-        1 for linha in linhas
+        1
+        for linha in linhas
         if (linha.get("order_status") or "").strip().lower() == alvo
     )
 
@@ -136,7 +137,7 @@ def padronizar_categorias(linhas):
 
 
 def preencher_categoria(linhas):
-    """Preenche product_category_name vazio/nulo com 'Sem Categoria'.
+    """Preenche product_category_name vazio/nulo com 'sem categoria'.
 
     Parâmetros:
         linhas (list[dict]): registros de produtos.
@@ -147,7 +148,7 @@ def preencher_categoria(linhas):
     for linha in linhas:
         valor = (linha.get("product_category_name") or "").strip()
         if valor == "":
-            linha["product_category_name"] = "Sem Categoria"
+            linha["product_category_name"] = "sem categoria"
             n_corrigidos += 1
     return linhas, n_corrigidos
 
@@ -209,19 +210,20 @@ def verificar_hipotese_cancelamento(sem_data):
     """
     cancelados = 0
     outros = 0
+    sem_status = 0
     for linha in sem_data:
         status = (linha.get("order_status") or "").strip().lower()
         if status == "canceled":
             cancelados += 1
         elif status == "":
-            outros += 1
+            sem_status += 1
         else:
             outros += 1
     return {
         "total_sem_data": len(sem_data),
         "cancelados": cancelados,
         "nao_cancelados": outros,
+        "sem_status": sem_status, # adicionado para mostrar uso elif
         # a hipótese só se confirma se NENHUM registro sem data tiver status diferente de 'canceled'
-        "hipotese_confirmada": outros == 0,
+        "hipotese_confirmada": sem_status == 0 and outros == 0,
     }
-

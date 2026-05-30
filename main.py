@@ -57,9 +57,9 @@ def main():
     print(" ")
 
     # HEADER
-    print("╔"   + "═" * 62 +   "╗")
+    print("╔" + "═" * 62 + "╗")
     print("║      Relatório de Sanitização de Dados - Cliente OLIST       ║")
-    print("╠" +  "═" * 62  +   "╣")
+    print("╠" + "═" * 62 + "╣")
 
     # DADOS
     print("║  " + " " * 58 + "  ║")
@@ -67,7 +67,7 @@ def main():
     print(f"║  Pedidos processados ................................ {total_pedidos}  ║")
     print(f"║  Total de linhas processadas ....................... {total_produtos + total_pedidos}  ║")
     print("║  " + "─" * 58 + "  ║")
-    print(f"║  Categorias preenchidas ('Sem Categoria').............. {n_cat}  ║")
+    print(f"║  Categorias preenchidas ('sem categoria').............. {n_cat}  ║")
     print(f"║  Categorias únicas ..................................... {len(categorias_unicas)}  ║")
     print(f"║  Dimensões físicas preenchidas (média) .................. {n_dim}  ║")
     print(f"║  Total de nulos corrigidos ............................ {nulos_corrigidos}  ║")
@@ -77,11 +77,11 @@ def main():
     print(f"║  Pedidos sem data de entrega ......................... {hipotese['total_sem_data']}  ║")
     print(f"║  -> cancelados ........................................ {hipotese['cancelados']}  ║")
     print(f"║  -> NÃO cancelados ................................... {hipotese['nao_cancelados']}  ║")
+    print(f"║  -> sem status .......................................... {hipotese['sem_status']}  ║")
     print("║ " + " " * 60 + " ║")
 
-
     # HIPÓTESE
-    print("╠" +  "═" * 62  +   "╣")
+    print("╠" + "═" * 62 + "╣")
     print("║ ╭" + "─" * 58 + "╮ ║")
     print("║ │" + " " * 58 + "│ ║")
     if hipotese["hipotese_confirmada"]:
@@ -92,7 +92,7 @@ def main():
         print("║ │   (invoiced, processing, shipped, unavailable, etc.).    │ ║")
     print("║ │" + " " * 58 + "│ ║")
     print("║ ╰" + "─" * 58 + "╯ ║")
-    print("╚"   + "═" * 62 +   "╝")
+    print("╚" + "═" * 62 + "╝")
 
     # Firula: Cálculo de espaçamento para processamentos lentos
     fim = time.time()
