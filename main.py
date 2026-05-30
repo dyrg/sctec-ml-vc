@@ -10,6 +10,8 @@ Os CSVs devem estar na pasta data/
 """
 
 import os
+import time
+
 import funcoes
 
 # Pasta com os datasets baixados localmente
@@ -27,6 +29,10 @@ COLUNAS_DIMENSOES = [
 
 
 def main():
+    # ---------- Cálculo de tempo de processamento ----------
+    inicio = time.time()
+    data_hoje = time.strftime("%d/%m/%Y, %H:%M")
+
     # ---------- Produtos ----------
     produtos = funcoes.carregar_csv(CAMINHO_PRODUTOS)
     total_produtos = len(produtos)
@@ -42,29 +48,62 @@ def main():
     sem_data, com_data = funcoes.separar_entregas_vazias(pedidos)
     hipotese = funcoes.verificar_hipotese_cancelamento(sem_data)
     pedidos, n_datas = funcoes.formatar_datas_aprovacao(pedidos)
+    total_cancelados = funcoes.contar_status(pedidos, "canceled")
 
-    # ---------- Relatório parcial ----------
+    # ---------- Análise manual ----------
+    nulos_corrigidos = n_cat + n_dim
+
+    # ---------- Relatório final ----------
     print(" ")
-    print("---------------------------- Relatório Parcial ----------------------------")
-    print(" ")
-    print("===== PRODUTOS =====")
-    print("Produtos processados:", total_produtos)
-    print("Categorias preenchidas ('Sem Categoria'):", n_cat)
-    print("Dimensões físicas preenchidas (média):", n_dim)
-    print("Total de nulos corrigidos:", n_cat + n_dim)
-    print("Categorias únicas:", len(categorias_unicas))
-    print("Amostragem:", categorias_unicas[:3])
-    print(" ")
-    print("===== PEDIDOS =====")
-    print("Pedidos processados:", total_pedidos)
-    print("Datas de aprovação convertidas:", n_datas)
-    print("Pedidos sem data de entrega:", hipotese["total_sem_data"])
-    print("  cancelados:", hipotese["cancelados"])
-    print("  não cancelados:", hipotese["nao_cancelados"])
-    print("Hipótese 'nulo => cancelado' confirmada?", hipotese["hipotese_confirmada"])
-    print("Exemplo de data convertida (order_approved_at):", pedidos[2]["order_approved_at"])
-    print(" ")
-    print("---------------------------- ################# ----------------------------")
+
+    # HEADER
+    print("╔"   + "═" * 62 +   "╗")
+    print("║      Relatório de Sanitização de Dados - Cliente OLIST       ║")
+    print("╠" +  "═" * 62  +   "╣")
+
+    # DADOS
+    print("║  " + " " * 58 + "  ║")
+    print(f"║  Produtos processados ............................... {total_produtos}  ║")
+    print(f"║  Pedidos processados ................................ {total_pedidos}  ║")
+    print(f"║  Total de linhas processadas ....................... {total_produtos + total_pedidos}  ║")
+    print("║  " + "─" * 58 + "  ║")
+    print(f"║  Categorias preenchidas ('Sem Categoria').............. {n_cat}  ║")
+    print(f"║  Categorias únicas ..................................... {len(categorias_unicas)}  ║")
+    print(f"║  Dimensões físicas preenchidas (média) .................. {n_dim}  ║")
+    print(f"║  Total de nulos corrigidos ............................ {nulos_corrigidos}  ║")
+    print(f"║  Datas de aprovação convertidas (BR) ................ {n_datas}  ║")
+    print("║  " + "─" * 58 + "  ║")
+    print(f"║  Total de pedidos cancelados .......................... {total_cancelados}  ║")
+    print(f"║  Pedidos sem data de entrega ......................... {hipotese['total_sem_data']}  ║")
+    print(f"║  -> cancelados ........................................ {hipotese['cancelados']}  ║")
+    print(f"║  -> NÃO cancelados ................................... {hipotese['nao_cancelados']}  ║")
+    print("║ " + " " * 60 + " ║")
+
+
+    # HIPÓTESE
+    print("╠" +  "═" * 62  +   "╣")
+    print("║ ╭" + "─" * 58 + "╮ ║")
+    print("║ │" + " " * 58 + "│ ║")
+    if hipotese["hipotese_confirmada"]:
+        print("║ │   Hipótese 'data nula => cancelado': CONFIRMADA          │ ║")
+    else:
+        print("║ │   Hipótese 'data nula => cancelado': REFUTADA            │ ║")
+        print("║ │   Datas nulas também ocorrem em pedidos não cancelados   │ ║")
+        print("║ │   (invoiced, processing, shipped, unavailable, etc.).    │ ║")
+    print("║ │" + " " * 58 + "│ ║")
+    print("║ ╰" + "─" * 58 + "╯ ║")
+    print("╚"   + "═" * 62 +   "╝")
+
+    # Firula: Cálculo de espaçamento para processamentos lentos
+    fim = time.time()
+    tempo_total = fim - inicio
+    if tempo_total > 10:
+        espacos = 17
+    else:
+        espacos = 18
+
+    # FOOTER
+    print(f" {data_hoje}" + " " * espacos + f"Processado em {tempo_total:.2f} segundos ")
     print(" ")
 
 
