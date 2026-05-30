@@ -86,3 +86,38 @@ def preencher_dimensoes(linhas, colunas_dim):
                 linha[col] = round(medias[col], 2)
                 n_corrigidos += 1
     return linhas, n_corrigidos
+
+
+def padronizar_categoria(texto):
+    """Normaliza um nome de categoria usando RegEx.
+
+    Etapas:
+      - remove espaços nas extremidades (.strip());
+      - converte para minúsculas (.lower());
+      - remove caracteres especiais/pontuação via RegEx, mantendo apenas letras, dígitos, underscore (_) e espaço;
+      - strip espaços internos repetidos em um único espaço.
+
+    Parâmetros:
+        texto (str): nome bruto da categoria.
+    Retorna:
+        str: nome padronizado.
+    """
+    texto = (texto or "").strip().lower()
+    texto = re.sub(r"[^a-z0-9_ ]", "", texto)
+    texto = re.sub(r"\s+", " ", texto).strip()
+    return texto
+
+
+def padronizar_categorias(linhas):
+    """Aplica padronizar_categoria a product_category_name de cada registro.
+
+    Parâmetros:
+        linhas (list[dict]): registros de produtos.
+    Retorna:
+        list[dict]: linhas com a categoria padronizada.
+    """
+    for linha in linhas:
+        linha["product_category_name"] = padronizar_categoria(
+            linha.get("product_category_name", "")
+        )
+    return linhas

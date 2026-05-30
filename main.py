@@ -33,6 +33,8 @@ def main():
 
     produtos, n_cat = funcoes.preencher_categoria(produtos)
     produtos, n_dim = funcoes.preencher_dimensoes(produtos, COLUNAS_DIMENSOES)
+    produtos = funcoes.padronizar_categorias(produtos)
+    categorias_unicas = sorted({linha["product_category_name"] for linha in produtos})
 
     # ---------- Pedidos ----------
     pedidos = funcoes.carregar_csv(CAMINHO_PEDIDOS)
@@ -40,13 +42,15 @@ def main():
 
     # ---------- Relatório parcial ----------
     print(" ")
-    print("------------- Relatório Parcial -------------")
+    print("---------------------------- Relatório Parcial ----------------------------")
     print("Produtos processados:", total_produtos)
     print("Pedidos processados:", total_pedidos)
     print("Categorias preenchidas ('Sem Categoria'):", n_cat)
     print("Dimensoes fisicas preenchidas (media):", n_dim)
     print("Total de nulos corrigidos:", n_cat + n_dim)
-    print("------------- ################# -------------")
+    print("Categorias unicas:", len(categorias_unicas))
+    print("Amostragem:", categorias_unicas[:3])
+    print("---------------------------- ################# ----------------------------")
     print(" ")
 
 
