@@ -132,9 +132,15 @@ A mediana de cashback por pedido é 88,50 para quem permaneceu e 77,50 para quem
 
 ### 4. Preparação dos dados
 
-Codificar categóricas. Separar `X` e `y`. Split 80/20 com `stratify=y`. Balancear só o treino. `StandardScaler` só no KNN (fit no treino, transform no teste). Árvore sem escalonamento.
+Antes do encoding, juntamos nomes que representavam a mesma categoria, como `Phone` e `Mobile Phone`. `CustomerID` ficou fora dos preditores porque é apenas um identificador.
 
-Escolhas: _
+O split reservou 20% da base para teste com `stratify=y`. Ficamos com 4.504 clientes no treino e 1.126 no teste, ambos com cerca de 16,84% de churn.
+
+As cinco colunas categóricas passaram por one-hot encoding. O encoder foi ajustado somente no treino e depois aplicado ao teste. Assim, o teste não influenciou a criação das colunas. Os dois conjuntos ficaram com 31 preditores numéricos e nenhum valor ausente.
+
+O treino foi balanceado com `RandomUnderSampler`. A classe majoritária caiu de 3.746 para 758 registros, igualando os 758 casos de churn. Escolhi essa técnica para não criar combinações artificiais nas colunas one-hot. O teste não foi balanceado e continua com 16,87% de churn.
+
+No fluxo do KNN, o `StandardScaler` foi ajustado em 11 variáveis quantitativas do treino balanceado e aplicado ao teste. As variáveis categóricas e ordinais continuaram na escala original. A Árvore de Decisão usa o mesmo treino balanceado, mas sem escalonamento, porque seus cortes não dependem da escala.
 
 ### 5. Modelagem e overfitting
 
