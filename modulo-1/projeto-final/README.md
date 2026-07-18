@@ -132,9 +132,11 @@ A mediana de cashback por pedido é 88,50 para quem permaneceu e 77,50 para quem
 
 ### 4. Preparação dos dados
 
-Codificar categóricas. Separar `X` e `y`. Split 80/20 com `stratify=y`. Balancear só o treino. `StandardScaler` só no KNN (fit no treino, transform no teste). Árvore sem escalonamento.
+Antes do encoding, juntamos nomes que representavam a mesma categoria, como `Phone` e `Mobile Phone`. `CustomerID` ficou fora dos preditores porque é apenas um identificador.
 
-Escolhas: _
+O split reservou 20% da base para teste com `stratify=y`. Ficamos com 4.504 clientes no treino e 1.126 no teste, ambos com cerca de 16,84% de churn.
+
+As cinco colunas categóricas passaram por one-hot encoding. O encoder foi ajustado somente no treino e depois aplicado ao teste. Assim, o teste não influenciou a criação das colunas. Os dois conjuntos ficaram com 31 preditores numéricos e nenhum valor ausente.
 
 ### 5. Modelagem e overfitting
 
