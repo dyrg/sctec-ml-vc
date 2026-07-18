@@ -138,6 +138,10 @@ O split reservou 20% da base para teste com `stratify=y`. Ficamos com 4.504 clie
 
 As cinco colunas categóricas passaram por one-hot encoding. O encoder foi ajustado somente no treino e depois aplicado ao teste. Assim, o teste não influenciou a criação das colunas. Os dois conjuntos ficaram com 31 preditores numéricos e nenhum valor ausente.
 
+O treino foi balanceado com `RandomUnderSampler`. A classe majoritária caiu de 3.746 para 758 registros, igualando os 758 casos de churn. Escolhi essa técnica para não criar combinações artificiais nas colunas one-hot. O teste não foi balanceado e continua com 16,87% de churn.
+
+No fluxo do KNN, o `StandardScaler` foi ajustado em 11 variáveis quantitativas do treino balanceado e aplicado ao teste. As variáveis categóricas e ordinais continuaram na escala original. A Árvore de Decisão usa o mesmo treino balanceado, mas sem escalonamento, porque seus cortes não dependem da escala.
+
 ### 5. Modelagem e overfitting
 
 Testar no mínimo quatro valores de `n_neighbors` e quatro de `max_depth`, comparando treino e teste.
