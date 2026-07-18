@@ -1,0 +1,155 @@
+# Projeto final do módulo 1: previsão de churn
+
+Documento em construção. Os trechos em aberto serão preenchidos conforme o notebook for evoluindo.
+
+## Resumo executivo
+
+Seção para a diretoria. Escrever por último.
+
+- Problema: prever quais clientes têm maior risco de sair da plataforma.
+- Achados da EDA: _
+- Modelo recomendado: _
+- Por quê: _
+
+## Problema de negócio
+
+Uma plataforma de e-commerce quer achar clientes prestes a parar de comprar, para oferecer cupons de retenção a tempo.
+
+Dois erros importam:
+
+- falso positivo: gastar cupom com quem já ia continuar comprando;
+- falso negativo: deixar escapar um cliente que estava saindo.
+
+O objetivo é treinar e comparar KNN e Árvore de Decisão para prever `Churn`, e escolher o modelo olhando tanto generalização quanto o custo desses erros.
+
+## Base de dados
+
+- Arquivo: [`ecommerce_dataset.csv`](../datasets/ecommerce_dataset.csv)
+- Registros: _
+- Colunas originais: _
+- Alvo: `Churn`
+- Distribuição das classes: _
+
+## Dicionário de dados
+
+| Coluna | Tipo | Descrição |
+| --- | --- | --- |
+| `CustomerID` | numérica | ID do cliente |
+| `Churn` | binária | 1 se o cliente saiu, caso contrário 0 |
+| `Tenure` | numérica | tempo de relacionamento com a plataforma |
+| `PreferredLoginDevice` | categórica | dispositivo preferido de login |
+| `CityTier` | ordinal | classificação da cidade |
+| `WarehouseToHome` | numérica | distância do armazém até a casa |
+| `PreferredPaymentMode` | categórica | forma de pagamento preferida |
+| `Gender` | categórica | gênero |
+| `HourSpendOnApp` | numérica | horas no app |
+| `NumberOfDeviceRegistered` | numérica | dispositivos cadastrados |
+| `PreferedOrderCat` | categórica | categoria preferida de pedido |
+| `SatisfactionScore` | ordinal | nota de satisfação |
+| `MaritalStatus` | categórica | estado civil |
+| `NumberOfAddress` | numérica | endereços cadastrados |
+| `Complain` | binária | se houve reclamação |
+| `OrderAmountHikeFromlastYear` | numérica | variação percentual do valor dos pedidos vs. ano anterior |
+| `CouponUsed` | numérica | cupons usados |
+| `OrderCount` | numérica | quantidade de pedidos |
+| `DaySinceLastOrder` | numérica | dias desde o último pedido |
+| `CashbackAmount` | numérica | valor de cashback |
+| `cashback_por_pedido` | calculada | `CashbackAmount / OrderCount` |
+
+## Como executar
+
+### Pré-requisitos
+
+- Python: _
+- Jupyter Notebook ou equivalente
+
+### Instalação
+
+```bash
+# criar requirements.txt e listar as libs usadas
+pip install -r requirements.txt
+```
+
+### Dados
+
+Cópia usada neste projeto:
+
+```text
+https://raw.githubusercontent.com/dyrg/sctec-ml-vc/main/modulo-1/datasets/ecommerce_dataset.csv
+```
+
+Se quiser a versão mais recente, o mesmo dataset está no [Kaggle](https://www.kaggle.com/datasets/ankitverma2010/ecommerce-customer-churn-analysis-and-prediction). Pode haver diferenças em relação ao arquivo daqui.
+
+### Execução
+
+```bash
+# comando ou caminho do notebook principal
+```
+
+## Metodologia
+
+### 1. Análise exploratória
+
+Olhar tamanho da base, tipos, `.describe()`, distribuição do `Churn` e pelo menos três gráficos (distribuições, desbalanceamento do alvo e correlação). Anotar o que isso muda na preparação.
+
+Achados: _
+
+### 2. Limpeza e tratamento
+
+Remover duplicatas. Imputar nulos com média ou mediana, justificando a escolha. Decidir o que fazer com outliers. Lembrar: KNN sofre com outlier; árvore costuma aguentar melhor.
+
+Decisões: _
+
+### 3. Engenharia de atributos
+
+```text
+cashback_por_pedido = CashbackAmount / OrderCount
+```
+
+Tratar nulos e divisão por zero antes do cálculo.
+
+Resultado: _
+
+### 4. Preparação dos dados
+
+Codificar categóricas. Separar `X` e `y`. Split 80/20 com `stratify=y`. Balancear só o treino. `StandardScaler` só no KNN (fit no treino, transform no teste). Árvore sem escalonamento.
+
+Escolhas: _
+
+### 5. Modelagem e overfitting
+
+Testar no mínimo quatro valores de `n_neighbors` e quatro de `max_depth`, comparando treino e teste.
+
+| Modelo | Hiperparâmetro | Treino | Teste | Diagnóstico |
+| --- | --- | ---: | ---: | --- |
+| KNN | _ | _ | _ | _ |
+| Árvore de Decisão | _ | _ | _ | _ |
+
+Configurações escolhidas: _
+
+### 6. Avaliação
+
+Para as melhores configurações: classification report, matriz de confusão e leitura de FP/FN.
+
+| Modelo | Acurácia | Precisão | Recall | F1 |
+| --- | ---: | ---: | ---: | ---: |
+| KNN | _ | _ | _ | _ |
+| Árvore de Decisão | _ | _ | _ | _ |
+
+## Veredito de negócio
+
+Ligar o resultado ao custo de cupom desperdiçado vs. cliente perdido.
+
+- Erro mais caro: _
+- Modelo para produção: _
+- Justificativa: _
+- Limitações: _
+
+## Estrutura
+
+```text
+projeto-final/
+├── README.md
+├── requirements.txt     # a criar
+└── projeto_final.ipynb  # a criar
+```
