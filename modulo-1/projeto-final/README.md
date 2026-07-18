@@ -7,7 +7,7 @@ Documento em construção. Os trechos em aberto serão preenchidos conforme o no
 Seção para a diretoria. Escrever por último.
 
 - Problema: prever quais clientes têm maior risco de sair da plataforma.
-- Achados da EDA: _
+- Achados da EDA: a base tem 16,84% de churn; clientes que saíram têm mediana de 1 em `Tenure`, contra 10 entre os que permaneceram.
 - Modelo recomendado: _
 - Por quê: _
 
@@ -25,10 +25,10 @@ O objetivo é treinar e comparar KNN e Árvore de Decisão para prever `Churn`, 
 ## Base de dados
 
 - Arquivo: [`ecommerce_dataset.csv`](../datasets/ecommerce_dataset.csv)
-- Registros: _
-- Colunas originais: _
+- Registros: 5.630
+- Colunas originais: 20
 - Alvo: `Churn`
-- Distribuição das classes: _
+- Distribuição das classes: 83,16% permaneceram e 16,84% saíram
 
 ## Dicionário de dados
 
@@ -105,9 +105,11 @@ jupyter notebook projeto_final.ipynb
 
 ### 1. Análise exploratória
 
-Olhar tamanho da base, tipos, `.describe()`, distribuição do `Churn` e pelo menos três gráficos (distribuições, desbalanceamento do alvo e correlação). Anotar o que isso muda na preparação.
+A base tem 5.630 registros e 20 colunas. Só 16,84% dos clientes saíram, então a acurácia sozinha pode passar uma impressão errada.
 
-Achados: _
+`Tenure` é o sinal mais forte até agora, com correlação de -0,349. Quem saiu tem mediana 1; quem ficou, 10. Reclamação também puxa o churn, com correlação de 0,250.
+
+Sete colunas numéricas têm valores ausentes. Vamos resolver esses nulos antes da engenharia de atributos e da modelagem. O split vai manter a proporção das classes, e o balanceamento ficará só no treino.
 
 ### 2. Limpeza e tratamento
 
