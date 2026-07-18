@@ -54,7 +54,7 @@ O objetivo é treinar e comparar KNN e Árvore de Decisão para prever `Churn`, 
 | `OrderCount` | numérica | quantidade de pedidos |
 | `DaySinceLastOrder` | numérica | dias desde o último pedido |
 | `CashbackAmount` | numérica | valor de cashback |
-| `cashback_por_pedido` | calculada | `CashbackAmount / OrderCount` |
+| `cashback_por_pedido` | calculada | cashback recebido por pedido |
 
 ## Desenvolvimento e execução
 
@@ -126,9 +126,9 @@ Essa decisão pede atenção no KNN, enquanto a Árvore de Decisão tende a lida
 cashback_por_pedido = CashbackAmount / OrderCount
 ```
 
-Tratar nulos e divisão por zero antes do cálculo.
+As colunas de origem já estavam sem nulos, e `OrderCount` não tinha zeros. A nova variável ficou sem valores ausentes ou infinitos.
 
-Resultado: _
+A mediana de cashback por pedido é 88,50 para quem permaneceu e 77,50 para quem saiu. A diferença existe, mas é pequena demais para explicar o churn por si só. Com isso, `cashback_por_pedido` entra como mais um sinal, junto com as outras colunas.
 
 ### 4. Preparação dos dados
 
