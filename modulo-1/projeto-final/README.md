@@ -109,13 +109,16 @@ A base tem 5.630 registros e 20 colunas. Só 16,84% dos clientes saíram, então
 
 `Tenure` é o sinal mais forte até agora, com correlação de -0,349. Quem saiu tem mediana 1; quem ficou, 10. Reclamação também puxa o churn, com correlação de 0,250.
 
-Sete colunas numéricas têm valores ausentes. Vamos resolver esses nulos antes da engenharia de atributos e da modelagem. O split vai manter a proporção das classes, e o balanceamento ficará só no treino.
+Sete colunas numéricas têm valores ausentes. O split vai manter a proporção das classes, e o balanceamento ficará só no treino.
 
 ### 2. Limpeza e tratamento
 
-Remover duplicatas. Imputar nulos com média ou mediana, justificando a escolha. Decidir o que fazer com outliers. Lembrar: KNN sofre com outlier; árvore costuma aguentar melhor.
+Não encontrei linhas duplicadas. Mesmo assim, `drop_duplicates()` continua no fluxo para proteger a limpeza caso a fonte mude (e devemos considerar que ela sempre pode mudar).
 
-Decisões: _
+`HourSpendOnApp` é praticamente simétrica, então seus nulos foram preenchidos com a média. Nas outras seis colunas, a cauda à direita e os valores extremos puxam a média; nelas usamos a mediana. A base ficou sem valores ausentes.
+
+Mantive os outliers. O IQR marcou muitos valores de `OrderCount` e `CouponUsed`, mas são contagens plausíveis de clientes ativos. Removê-los apagaria comportamento real.
+Essa decisão pede atenção no KNN, enquanto a Árvore de Decisão tende a lidar melhor com os extremos.
 
 ### 3. Engenharia de atributos
 
