@@ -56,19 +56,25 @@ O objetivo é treinar e comparar KNN e Árvore de Decisão para prever `Churn`, 
 | `CashbackAmount` | numérica | valor de cashback |
 | `cashback_por_pedido` | calculada | `CashbackAmount / OrderCount` |
 
-## Como executar
+## Desenvolvimento e execução
 
-### Pré-requisitos
+O projeto foi desenvolvido no [Visual Studio Code](https://code.visualstudio.com/) com estas extensões:
 
-- Python: _
-- Jupyter Notebook ou equivalente
+- [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
+- [Jupyter](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter)
 
-### Instalação
+### Preparação do ambiente
+
+- Python 3.10+
 
 ```bash
-# criar requirements.txt e listar as libs usadas
-pip install -r requirements.txt
+cd modulo-1/projeto-final
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
 ```
+
+Use o `python`/`pip` do `.venv` depois de ativar. Se instalar com o Python do sistema, o kernel do notebook pode falhar ao iniciar.
 
 ### Dados
 
@@ -80,10 +86,19 @@ https://raw.githubusercontent.com/dyrg/sctec-ml-vc/main/modulo-1/datasets/ecomme
 
 Se quiser a versão mais recente, o mesmo dataset está no [Kaggle](https://www.kaggle.com/datasets/ankitverma2010/ecommerce-customer-churn-analysis-and-prediction). Pode haver diferenças em relação ao arquivo daqui.
 
-### Execução
+### Execução no VS Code
+
+1. Abra a pasta `modulo-1/projeto-final` no VS Code.
+2. Abra o arquivo `projeto_final.ipynb`.
+3. Clique em **Selecionar Kernel** e escolha o interpretador Python da pasta `.venv`.
+4. Use **Executar Tudo** para rodar as células na ordem.
+
+### Execução pelo terminal
 
 ```bash
-# comando ou caminho do notebook principal
+cd modulo-1/projeto-final
+source .venv/bin/activate
+jupyter notebook projeto_final.ipynb
 ```
 
 ## Metodologia
@@ -150,6 +165,6 @@ Ligar o resultado ao custo de cupom desperdiçado vs. cliente perdido.
 ```text
 projeto-final/
 ├── README.md
-├── requirements.txt     # a criar
-└── projeto_final.ipynb  # a criar
+├── requirements.txt
+└── projeto_final.ipynb
 ```

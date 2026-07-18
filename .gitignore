@@ -2,3 +2,6 @@
 modulo-1/datasets/credit_risk_dataset.csv
 # Cache
 cache/
+# Ambiente local
+modulo-1/projeto-final/.venv/
+**/.ipynb_checkpoints/
