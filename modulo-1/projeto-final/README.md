@@ -144,14 +144,16 @@ No fluxo do KNN, o `StandardScaler` foi ajustado em 11 variáveis quantitativas 
 
 ### 5. Modelagem e overfitting
 
-Testar no mínimo quatro valores de `n_neighbors` e quatro de `max_depth`, comparando treino e teste.
+Testamos cinco valores de `n_neighbors` (3, 5, 7, 9 e 11) e cinco de `max_depth` (3, 5, 7, 10 e sem limite). Em cada cenário, comparamos F1 de treino e teste.
 
-| Modelo | Hiperparâmetro | Treino | Teste | Diagnóstico |
-| --- | --- | ---: | ---: | --- |
-| KNN | _ | _ | _ | _ |
-| Árvore de Decisão | _ | _ | _ | _ |
+| Modelo | Hiperparâmetro | F1 treino | F1 teste | Recall teste (Churn) | Gap de F1 |
+| --- | --- | ---: | ---: | ---: | ---: |
+| KNN | `n_neighbors=5` | 0,911 | 0,558 | 0,895 | 0,353 |
+| Árvore de Decisão | `max_depth=7` | 0,905 | 0,635 | 0,858 | 0,269 |
 
-Configurações escolhidas: _
+No KNN, K=3 teve F1 de teste quase igual ao de K=5, mas com gap maior. Preferi K=5. Na Árvore, profundidade ilimitada decorou o treino (F1 1,000) e `max_depth=10` ainda carregou overfitting demais. Ficamos então com `max_depth=7`.
+
+Até aqui, a Árvore generaliza melhor no F1 de teste e tem o menor gap. Mas no recall da classe Churn o KNN é maior (0,895 contra 0,858): o F1 mais alto da Árvore vem de uma precisão melhor, não de pegar mais churners. Nenhum modelo domina nas duas métricas. A fase seguinte olha as matrizes de confusão e liga essa diferença ao custo dos erros.
 
 ### 6. Avaliação
 
