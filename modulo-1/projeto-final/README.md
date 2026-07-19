@@ -182,11 +182,11 @@ Falta ainda o custo do cupom e o valor de um cliente retido, que o projeto não 
 
 A base não traz o custo do cupom nem o valor de um cliente retido, então a razão de ~12 do veredito fica sem comparação real. Fui pesquisar se esse número faz algum sentido no mundo real, só por curiosidade.
 
-Antes de mais nada, quase passou batido um detalhe importante. Essa base vem do Kaggle e tem `UPI` como método de pagamento em `PreferredPaymentMode`, e UPI é o sistema de pagamento instantâneo da Índia. Então o dataset provavelmente reflete uma operação indiana, não brasileira. Isso importa porque qualquer valor em reais que eu buscasse pra comparar com `CashbackAmount` ia misturar moeda e poder de compra de economias diferentes, sem nenhuma conversão. Por isso não dá pra colocar um preço de cupom em R$ em cima dos números da base.
+Antes de mais nada, quase passou batido um detalhe importante. Essa base vem do Kaggle e tem `UPI` como método de pagamento em `PreferredPaymentMode`, e UPI é o sistema de pagamento instantâneo da Índia[^1]. Então o dataset provavelmente reflete uma operação indiana, não brasileira. Isso importa porque qualquer valor em reais que eu buscasse pra comparar com `CashbackAmount` ia misturar moeda e poder de compra de economias diferentes, sem nenhuma conversão. Por isso não dá pra colocar um preço de cupom em R$ em cima dos números da base.
 
-O que ainda dá pra usar é uma proporção, que não depende de moeda nenhuma. Tem uma estatística clássica de marketing que diz que adquirir cliente novo custa de 5 a 25 vezes mais que reter um que já existe. Fui atrás de onde isso vem e achei que é do Frederick Reichheld, num artigo de 1990 da Harvard Business Review chamado "Zero Defections: Quality Comes to Services", baseado em dados de cartão de crédito e seguros. Depois virou praticamente consenso com pesquisas da Bain & Company, e a própria HBR retomou o assunto num [artigo de 2014](https://hbr.org/2014/10/the-value-of-keeping-the-right-customers).
+O que ainda dá pra usar é uma proporção, que não depende de moeda nenhuma. Tem uma estatística clássica de marketing que diz que adquirir cliente novo custa de 5 a 25 vezes mais que reter um que já existe. Fui atrás de onde isso vem: é de Frederick Reichheld e W. Earl Sasser Jr., num artigo de 1990 da Harvard Business Review chamado "Zero Defections: Quality Comes to Services"[^2], baseado em dados de cartão de crédito e seguros. Depois virou praticamente consenso com pesquisas da Bain & Company, e a própria HBR retomou o assunto num artigo de 2014[^3].
 
-A razão de equilíbrio do projeto (~12) cai dentro dessa faixa de 5 a 25 vezes. Isso não prova nada sobre o negócio real por trás da base, só mostra que a ordem de grandeza não é absurda perto do que a literatura de retenção costuma considerar plausível em qualquer mercado. Também busquei um benchmark de CAC em e-commerce brasileiro, e a [Moyker](https://www.moyker.com.br/inteligencia/satelite/como-calcular-cac-real-ecommerce) reporta algo entre R$ 20 e R$ 150. Preferi não usar esse número aqui porque é de outro país, outra moeda, e não tem como saber se o cupom da base equivale a isso. Fica só registrado como algo que pesquisei e descartei.
+A razão de equilíbrio do projeto (~12) cai dentro dessa faixa de 5 a 25 vezes. Isso não prova nada sobre o negócio real por trás da base, só mostra que a ordem de grandeza não é absurda perto do que a literatura de retenção costuma considerar plausível em qualquer mercado. Também busquei benchmarks de CAC (custo de aquisição de cliente) fora do dataset: a Moyker[^4] reporta algo entre R$ 20 e R$ 150 pro e-commerce brasileiro; já Shopify[^5] e First Page Sage[^6] reportam CAC de e-commerce em dólar, também variando bastante por categoria (na casa de US$ 70 a US$ 400, dependendo do setor). Prefiro não usar nenhum desses números aqui porque são de mercados e moedas diferentes do dataset, que provavelmente reflete uma operação indiana, e não tem como saber se o cupom da base equivale a qualquer um deles. Ficam só registrados como algo que pesquisei e descartei.
 
 ## Glossário de termos técnicos
 
@@ -224,3 +224,19 @@ projeto-final/
         ├── overfitting_arvore.png
         └── matrizes_confusao.png
 ```
+
+-----
+
+## Referências
+
+[^1]: What is UPI (Unified Payments Interface)? Stripe. https://stripe.com/br/resources/more/unified-payments-interface-upi
+
+[^2]: REICHHELD, Frederick F.; SASSER, W. Earl Jr. Zero Defections: Quality Comes to Services. Harvard Business Review, set./out. 1990. https://hbr.org/1990/09/zero-defections-quality-comes-to-services
+
+[^3]: The Value of Keeping the Right Customers. Harvard Business Review, out. 2014. https://hbr.org/2014/10/the-value-of-keeping-the-right-customers
+
+[^4]: Como calcular CAC real em e-commerce. Moyker Inteligência. https://www.moyker.com.br/inteligencia/satelite/como-calcular-cac-real-ecommerce (empresa nova, número usado com reserva)
+
+[^5]: Custo de aquisição de clientes por setor (2025). Shopify Brasil. https://www.shopify.com/br/blog/custo-de-aquisicao-de-clientes-por-setor (dado próprio de 2021, mercado americano, empresas com menos de 4 funcionários)
+
+[^6]: Average CAC for eCommerce Companies. First Page Sage. https://firstpagesage.com/reports/average-cac-for-ecommerce-companies/ (dado próprio da agência, carteira de clientes 2020-2025, mercado americano)
